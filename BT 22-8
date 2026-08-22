@@ -1,0 +1,93 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Dinh nghia lop NhanVien
+class NhanVien {
+private:
+    string hoTen;
+    int tuoi;
+    double luong;
+
+public:
+    // Phuong thuc nhap
+    void nhap(string ten) {
+        hoTen = ten; // Gan ten nhan vien
+        cout << "Nhap tuoi: ";
+        cin >> tuoi;
+        cout << "Nhap luong: ";
+        cin >> luong;
+    }
+
+    // Phuong thuc xuat
+    void xuat() {
+        cout << "Ho ten: " << hoTen << " | Tuoi: " << tuoi << " | Luong: " << luong << endl;
+    }
+};
+
+int main() {
+    // Mang chua san ten 10 nhan vien theo de bai
+    string dsTen[10] = {"An", "Minh", "Mai", "Huong", "Hoa", "Hong", "Dung", "Tuan", "Linh", "Vy"};
+
+    // ==========================================
+    // CACH 1: Dung mang tinh
+    // ==========================================
+    cout << "\n================ CACH 1: MANG TINH ================\n";
+    NhanVien dsnv1[10];
+
+    // Nhap du lieu
+    for (int i = 0; i < 10; i++) {
+        cout << "=== NHAP THONG TIN CHO NHAN VIEN " << dsTen[i] << " ===" << endl;
+        dsnv1[i].nhap(dsTen[i]);
+    }
+
+    // Xuat du lieu
+    for (int i = 0; i < 10; i++) {
+        cout << "\n=== XUAT THONG TIN NHAN VIEN " << dsTen[i] << " ===" << endl;
+        dsnv1[i].xuat();
+    }
+
+    // ==========================================
+    // CACH 2: Dung con tro & cap phat dong (new / delete)
+    // ==========================================
+    cout << "\n================ CACH 2: CAP PHAT DONG ================\n";
+    NhanVien *dsnv2 = new NhanVien[10];
+
+    // Nhap du lieu
+    for (int i = 0; i < 10; i++) {
+        cout << "=== NHAP THONG TIN CHO NHAN VIEN " << dsTen[i] << " ===" << endl;
+        dsnv2[i].nhap(dsTen[i]);
+    }
+
+    // Xuat du lieu
+    for (int i = 0; i < 10; i++) {
+        cout << "\n=== XUAT THONG TIN NHAN VIEN " << dsTen[i] << " ===" << endl;
+        dsnv2[i].xuat();
+    }
+
+    delete[] dsnv2; // Giai phong bo nho
+
+    // ==========================================
+    // CACH 3: Dung std::vector
+    // ==========================================
+    cout << "\n================ CACH 3: STD::VECTOR ================\n";
+    vector<NhanVien> dsnv3;
+
+    // Nhap du lieu bang push_back
+    for (int i = 0; i < 10; i++) {
+        cout << "=== NHAP THONG TIN CHO NHAN VIEN " << dsTen[i] << " ===" << endl;
+        NhanVien nv;
+        nv.nhap(dsTen[i]);
+        dsnv3.push_back(nv);
+    }
+
+    // Xuat du lieu
+    for (int i = 0; i < dsnv3.size(); i++) {
+        cout << "\n=== XUAT THONG TIN NHAN VIEN " << dsTen[i] << " ===" << endl;
+        dsnv3[i].xuat();
+    }
+
+    return 0;
+}
