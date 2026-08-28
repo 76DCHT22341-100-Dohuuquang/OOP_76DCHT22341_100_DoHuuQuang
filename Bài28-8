@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+class MaTran
+{
+private:
+    int soHang;
+    int soCot;
+    int a[100][100];
+
+public:
+    // Câu 2: Nhập ma trận
+    void nhap()
+    {
+        cout << "Nhap so hang: ";
+        cin >> soHang;
+
+        cout << "Nhap so cot: ";
+        cin >> soCot;
+
+        for (int i = 0; i < soHang; i++)
+        {
+            for (int j = 0; j < soCot; j++)
+            {
+                cin >> a[i][j];
+            }
+        }
+    }
+
+    // Câu 2: Xuất ma trận
+    void xuat()
+    {
+        for (int i = 0; i < soHang; i++)
+        {
+            for (int j = 0; j < soCot; j++)
+            {
+                cout << a[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    // Câu 3: Hàm cộng hai ma trận
+    friend MaTran cong(MaTran A, MaTran B);
+};
+
+// Hàm bạn cộng hai ma trận
+MaTran cong(MaTran A, MaTran B)
+{
+    MaTran C;
+
+    C.soHang = A.soHang;
+    C.soCot = A.soCot;
+
+    for (int i = 0; i < A.soHang; i++)
+    {
+        for (int j = 0; j < A.soCot; j++)
+        {
+            C.a[i][j] = A.a[i][j] + B.a[i][j];
+        }
+    }
+
+    return C;
+}
+
+int main()
+{
+    MaTran A, B, C;
+
+    cout << "Nhap ma tran A:\n";
+    A.nhap();
+
+    cout << "\nNhap ma tran B:\n";
+    B.nhap();
+
+    C = cong(A, B);
+
+    cout << "\nMa tran A:\n";
+    A.xuat();
+
+    cout << "\nMa tran B:\n";
+    B.xuat();
+
+    cout << "\nMa tran A + B:\n";
+    C.xuat();
+
+    return 0;
+}
