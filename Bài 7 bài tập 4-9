@@ -1,0 +1,107 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class sinhvien {
+private:
+    string hoten;
+    string namsinh;
+    double diem[4]; // Bài 7 chỉ có 4 môn học
+
+public:
+    // Câu 2: Nhập thông tin
+    void nhap() {
+        cout << "Nhap ho ten: ";
+        getline(cin, hoten);
+        
+        cout << "Nhap nam sinh: ";
+        getline(cin, namsinh);
+        
+        cout << "Nhap diem 4 mon hoc:\n";
+        for (int i = 0; i < 4; i++) {
+            cout << "  - Diem mon " << i + 1 << ": ";
+            cin >> diem[i];
+        }
+        cin.ignore();
+    }
+
+    // Câu 2: Tính điểm trung bình
+    double tinhDTB() {
+        double sum = 0;
+        for (int i = 0; i < 4; i++) {
+            sum += diem[i];
+        }
+        return sum / 4.0;
+    }
+
+    // Câu 2: Xuất thông tin
+    void xuat() {
+        cout << "Ho ten: " << hoten << " | Nam sinh: " << namsinh << endl;
+        cout << "Diem 4 mon: ";
+        for (int i = 0; i < 4; i++) {
+            cout << diem[i] << "  ";
+        }
+        cout << "\n-> Diem trung binh: " << tinhDTB() << endl;
+    }
+
+    // Câu 3: Kiểm tra điều kiện thi tốt nghiệp
+    // ĐTB < 7 và Không có môn nào < 5
+    bool laThiTotNghiep() {
+        // 1. Kiểm tra điểm trung bình phải < 7
+        if (tinhDTB() >= 7.0) {
+            return false;
+        }
+
+        // 2. Kiểm tra xem có môn nào dưới 5 không
+        for (int i = 0; i < 4; i++) {
+            if (diem[i] < 5.0) {
+                return false; // Nếu dính môn < 5 thì loại ngay
+            }
+        }
+
+        return true; // Thỏa mãn cả 2 điều kiện
+    }
+};
+
+int main() {
+    int n;
+    cout << "Nhap so luong sinh vien: ";
+    cin >> n;
+    cin.ignore();
+
+    vector<sinhvien> dsSV(n);
+
+    for (int i = 0; i < n; i++) {
+        cout << "\n=== NHAP SINH VIEN THU " << i + 1 << " ===\n";
+        dsSV[i].nhap();
+    }
+
+    cout << "\n========================================\n";
+    cout << "        DANH SACH SINH VIEN";
+    cout << "\n========================================\n";
+    for (int i = 0; i < n; i++) {
+        cout << "\n[Sinh vien " << i + 1 << "]\n";
+        dsSV[i].xuat();
+    }
+
+    cout << "\n========================================\n";
+    cout << "  DANH SACH SINH VIEN PHAI THI TOT NGHIEP";
+    cout << "\n========================================\n";
+    bool coSV = false;
+    for (int i = 0; i < n; i++) {
+        if (dsSV[i].laThiTotNghiep()) {
+            dsSV[i].xuat();
+            cout << "----------------------------------------\n";
+            coSV = true;
+        }
+    }
+
+    if (!coSV) {
+        cout << "Khong co sinh vien nao phai thi tot nghiep.\n";
+    }
+
+    return 0;
+}
+
