@@ -14,7 +14,7 @@ public:
     // Câu 2: Nhập thông tin
     void nhap() {
         cout << "Nhap ho ten: ";
-        getline(cin, hoten);
+        getline(cin, hoten); 
         
         cout << "Nhap nam sinh: ";
         getline(cin, namsinh);
