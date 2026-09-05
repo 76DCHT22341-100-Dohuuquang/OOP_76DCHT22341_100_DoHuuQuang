@@ -1,0 +1,104 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class sinhvien {
+private:
+    string hoten;
+    string namsinh;
+    double diem[5];
+
+public:
+    // Câu 2: Nhập thông tin
+    void nhap() {
+        cout << "Nhap ho ten: ";
+        getline(cin, hoten);
+        
+        cout << "Nhap nam sinh: ";
+        getline(cin, namsinh);
+        
+        cout << "Nhap diem 5 mon hoc:\n";
+        for (int i = 0; i < 5; i++) {
+            cout << "  - Diem mon " << i + 1 << ": ";
+            cin >> diem[i];
+        }
+        cin.ignore(); // Xóa phím Enter sau khi nhập xong điểm
+    }
+
+    // Câu 2: Tính điểm trung bình
+    double tinhDTB() {
+        double sum = 0;
+        for (int i = 0; i < 5; i++) {
+            sum += diem[i];
+        }
+        return sum / 5.0;
+    }
+
+    // Câu 2: Xuất thông tin
+    void xuat() {
+        cout << "Ho ten: " << hoten << " | Nam sinh: " << namsinh << endl;
+        cout << "Diem 5 mon: ";
+        for (int i = 0; i < 5; i++) {
+            cout << diem[i] << "  ";
+        }
+        cout << "\n-> Diem trung binh: " << tinhDTB() << endl;
+    }
+
+    // Câu 3: In danh sách môn thi lại (điểm < 5)
+    void inMonThiLai() {
+        bool coThiLai = false;
+        
+        // Kiểm tra xem có môn nào < 5 không
+        for (int i = 0; i < 5; i++) {
+            if (diem[i] < 5.0) {
+                coThiLai = true;
+                break;
+            }
+        }
+
+        // Nếu có môn thi lại mới in thông tin
+        if (coThiLai) {
+            cout << "\n----------------------------------------\n";
+            cout << "Sinh vien: " << hoten << " (Nam sinh: " << namsinh << ")\n";
+            cout << "Danh sach mon phai thi lai (diem < 5):\n";
+            for (int i = 0; i < 5; i++) {
+                if (diem[i] < 5.0) {
+                    cout << "  + Mon " << i + 1 << ": " << diem[i] << " diem\n";
+                }
+            }
+        }
+    }
+};
+
+int main() {
+    int n;
+    cout << "Nhap so luong sinh vien: ";
+    cin >> n;
+    cin.ignore();
+
+    vector<sinhvien> dsSV(n);
+
+    for (int i = 0; i < n; i++) {
+        cout << "\n=== NHAP SINH VIEN THU " << i + 1 << " ===\n";
+        dsSV[i].nhap();
+    }
+
+    cout << "\n========================================\n";
+    cout << "        DANH SACH SINH VIEN";
+    cout << "\n========================================\n";
+    for (int i = 0; i < n; i++) {
+        cout << "\n[Sinh vien " << i + 1 << "]\n";
+        dsSV[i].xuat();
+    }
+
+    cout << "\n========================================\n";
+    cout << "    DANH SACH SINH VIEN PHAI THI LAI";
+    cout << "\n========================================\n";
+    for (int i = 0; i < n; i++) {
+        dsSV[i].inMonThiLai();
+    }
+
+    return 0;
+}
