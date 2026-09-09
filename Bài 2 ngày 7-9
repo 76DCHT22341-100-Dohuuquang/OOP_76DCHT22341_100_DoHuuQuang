@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+
+class PhanSo {
+private:
+    int tu;
+    int mau;
+
+public:
+    // Câu 1: Hàm tạo không đối
+    PhanSo() {
+        tu = 0;
+        mau = 1;
+    }
+
+    // Hàm tạo có đối
+    PhanSo(int tu, int mau) {
+        this->tu = tu;
+        this->mau = mau;
+    }
+
+    // Hàm hủy
+    ~PhanSo() {
+    }
+
+    // Câu 2: Nạp chồng toán tử nhập >>
+    friend istream& operator>>(istream& in, PhanSo& ps) {
+        cout << "Nhap tu so: ";
+        in >> ps.tu;
+
+        do {
+            cout << "Nhap mau so: ";
+            in >> ps.mau;
+        } while (ps.mau == 0);
+
+        return in;
+    }
+
+    // Nạp chồng toán tử xuất <<
+    friend ostream& operator<<(ostream& out, PhanSo ps) {
+        out << ps.tu << "/" << ps.mau;
+        return out;
+    }
+
+    // Rút gọn
+    void rutGon() {
+        int a = abs(tu);
+        int b = abs(mau);
+
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+
+        tu /= a;
+        mau /= a;
+
+        if (mau < 0) {
+            tu = -tu;
+            mau = -mau;
+        }
+    }
+
+    // Câu 3: Toán tử +
+    PhanSo operator+(PhanSo ps) {
+        PhanSo kq;
+        kq.tu = tu * ps.mau + ps.tu * mau;
+        kq.mau = mau * ps.mau;
+        kq.rutGon();
+        return kq;
+    }
+
+    // Toán tử -
+    PhanSo operator-(PhanSo ps) {
+        PhanSo kq;
+        kq.tu = tu * ps.mau - ps.tu * mau;
+        kq.mau = mau * ps.mau;
+        kq.rutGon();
+        return kq;
+    }
+
+    // Toán tử *
+    PhanSo operator*(PhanSo ps) {
+        PhanSo kq;
+        kq.tu = tu * ps.tu;
+        kq.mau = mau * ps.mau;
+        kq.rutGon();
+        return kq;
+    }
+
+    // Toán tử /
+    PhanSo operator/(PhanSo ps) {
+        PhanSo kq;
+        kq.tu = tu * ps.mau;
+        kq.mau = mau * ps.tu;
+        kq.rutGon();
+        return kq;
+    }
+};
+
+int main() {
+    PhanSo a, b;
+
+    cout << "Nhap phan so thu nhat:\n";
+    cin >> a;
+
+    cout << "\nNhap phan so thu hai:\n";
+    cin >> b;
+
+    a.rutGon();
+    b.rutGon();
+
+    cout << "\nPhan so a = " << a;
+    cout << "\nPhan so b = " << b;
+
+    cout << "\n\nTong = " << a + b;
+    cout << "\nHieu = " << a - b;
+    cout << "\nTich = " << a * b;
+    cout << "\nThuong = " << a / b;
+
+    return 0;
+}
