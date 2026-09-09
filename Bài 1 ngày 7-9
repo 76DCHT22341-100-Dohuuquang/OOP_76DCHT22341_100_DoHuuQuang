@@ -1,0 +1,136 @@
+#include <iostream>
+using namespace std;
+
+class PhanSo {
+private:
+    int tu;
+    int mau;
+
+public:
+    // Câu 1: Hàm tạo không đối
+    PhanSo() {
+        tu = 0;
+        mau = 1;
+    }
+
+    // Hàm tạo có đối
+    PhanSo(int tu, int mau) {
+        this->tu = tu;
+        this->mau = mau;
+    }
+
+    // Hàm hủy
+    ~PhanSo() {
+    }
+
+    // Câu 2: Nhập phân số
+    void nhap() {
+        cout << "Nhap tu so: ";
+        cin >> tu;
+
+        do {
+            cout << "Nhap mau so: ";
+            cin >> mau;
+        } while (mau == 0);
+    }
+
+    // Xuất phân số
+    void xuat() {
+        cout << tu << "/" << mau;
+    }
+
+    // Rút gọn
+    void rutGon() {
+        int a = abs(tu);
+        int b = abs(mau);
+
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+
+        tu /= a;
+        mau /= a;
+
+        // Đưa dấu âm lên tử
+        if (mau < 0) {
+            tu = -tu;
+            mau = -mau;
+        }
+    }
+
+    // Cộng
+    PhanSo cong(PhanSo ps) {
+        PhanSo kq;
+        kq.tu = tu * ps.mau + ps.tu * mau;
+        kq.mau = mau * ps.mau;
+        kq.rutGon();
+        return kq;
+    }
+
+    // Trừ
+    PhanSo tru(PhanSo ps) {
+        PhanSo kq;
+        kq.tu = tu * ps.mau - ps.tu * mau;
+        kq.mau = mau * ps.mau;
+        kq.rutGon();
+        return kq;
+    }
+
+    // Nhân
+    PhanSo nhan(PhanSo ps) {
+        PhanSo kq;
+        kq.tu = tu * ps.tu;
+        kq.mau = mau * ps.mau;
+        kq.rutGon();
+        return kq;
+    }
+
+    // Chia
+    PhanSo chia(PhanSo ps) {
+        PhanSo kq;
+        kq.tu = tu * ps.mau;
+        kq.mau = mau * ps.tu;
+        kq.rutGon();
+        return kq;
+    }
+};
+
+int main() {
+    PhanSo a, b;
+
+    cout << "Nhap phan so thu nhat:\n";
+    a.nhap();
+
+    cout << "Nhap phan so thu hai:\n";
+    b.nhap();
+
+    a.rutGon();
+    b.rutGon();
+
+    cout << "\nPhan so a = ";
+    a.xuat();
+
+    cout << "\nPhan so b = ";
+    b.xuat();
+
+    PhanSo tong = a.cong(b);
+    PhanSo hieu = a.tru(b);
+    PhanSo tich = a.nhan(b);
+    PhanSo thuong = a.chia(b);
+
+    cout << "\n\nTong = ";
+    tong.xuat();
+
+    cout << "\nHieu = ";
+    hieu.xuat();
+
+    cout << "\nTich = ";
+    tich.xuat();
+
+    cout << "\nThuong = ";
+    thuong.xuat();
+
+    return 0;
+}
